@@ -80,10 +80,8 @@ public class Processes {
     public Enumerator<String> enumerator() {
       final Process process = processSupplier.get();
       final InputStream is = process.getInputStream();
-      final BufferedInputStream bis =
-          new BufferedInputStream(is);
-      final InputStreamReader isr =
-          new InputStreamReader(bis, StandardCharsets.UTF_8);
+      final BufferedInputStream bis = new BufferedInputStream(is);
+      final InputStreamReader isr = new InputStreamReader(bis, StandardCharsets.UTF_8);
       final BufferedReader br = new BufferedReader(isr);
       return new Enumerator<String>() {
         private String line;
@@ -108,6 +106,9 @@ public class Processes {
         public void close() {
           try {
             br.close();
+            isr.close();
+            bis.close();
+            is.close();
           } catch (IOException e) {
             throw new RuntimeException("while running " + processSupplier, e);
           }
@@ -131,10 +132,8 @@ public class Processes {
     public Enumerator<String> enumerator() {
       final Process process = processSupplier.get();
       final InputStream is = process.getInputStream();
-      final BufferedInputStream bis =
-          new BufferedInputStream(is);
-      final InputStreamReader isr =
-          new InputStreamReader(bis, StandardCharsets.UTF_8);
+      final BufferedInputStream bis = new BufferedInputStream(is);
+      final InputStreamReader isr = new InputStreamReader(bis, StandardCharsets.UTF_8);
       final BufferedReader br = new BufferedReader(isr);
       return new Enumerator<String>() {
         private final StringBuilder b = new StringBuilder();
@@ -170,6 +169,9 @@ public class Processes {
         public void close() {
           try {
             br.close();
+            isr.close();
+            bis.close();
+            is.close();
           } catch (IOException e) {
             throw new RuntimeException("while running " + processSupplier, e);
           }
